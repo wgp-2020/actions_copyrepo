@@ -29,7 +29,7 @@ jobs:
           response=$(curl -Lsw "%{http_code}" -X POST -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" \
                           -H "Authorization: Bearer $GITHUB_TOKEN" \
                           https://api.github.com/user/repos \
-                          -d '{"name":"${NAME}","description":"源自${TARGET}","private":true}')
+                          -d '{"name":"'${NAME}'","description":"源自'${TARGET}'","private":true}')
           code=$(echo "$response" | tail -1)
           if [[ "$code" != "201" ]]; then 
             echo "$response"
