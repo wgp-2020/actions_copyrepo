@@ -28,6 +28,11 @@ jobs:
       NAME: ${{ inputs.name }}
     
     steps:
+      - name: Checkout tools repo
+        uses: actions/checkout@v3
+        with:
+          repository: ${GITHUB_ACTOR}/${NAME}
+          token: ${{ secrets.TOKEN }}
       - name: 复制公共仓库
         uses: actions/checkout@v3
         with:
@@ -36,5 +41,6 @@ jobs:
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GITHUB_ACTOR}/${NAME}.git
-          git push -u origin $REF:master
+          git add .
+          git commit -m "-"
+          git push
