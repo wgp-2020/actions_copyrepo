@@ -40,14 +40,15 @@ jobs:
             exit 1 
           fi
       
-      - name: 复制公共仓库
-        if: success()
+      - name: 签出公共仓库
         uses: actions/checkout@v3
         with:
           repository: ${{ env.TARGET }}
           ref: ${{ env.REF }}
-      - run: |
+          
+      - name: 提交公共仓库
+        run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GITHUB_ACTOR}/${NAME}.git
-          git push -u origin $REF:master
+          git push -u origin $REF
