@@ -7,6 +7,10 @@ on:
         description: '复制的公共仓库名称'
         required: true
         type: string
+      ref:
+        description: '公共仓库的分支/标签'
+        required: true
+        type: string
       name:
         description: '创建的私有仓库名称'
         required: true
@@ -20,6 +24,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.TOKEN }}
       GITHUB_ACTOR: ${{ github.actor }}
       TARGET: ${{ inputs.target }}
+      REF: ${{ inputs.ref }}
       NAME: ${{ inputs.name }}
     
     steps:
@@ -28,7 +33,7 @@ jobs:
           response=$(curl -Lsw "%{http_code}" -X POST -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" \
                           -H "Authorization: Bearer $GITHUB_TOKEN" \
                           https://api.github.com/user/repos \
-                          -d '{"name":"'${NAME}'","description":"源自'${TARGET}'","private":true}')
+                          -d '{"name":"'${NAME}'","description":"源自'${TARGET}':'${REF}'","private":true}')
           code=$(echo "$response" | tail -1)
           if [[ "$code" != "201" ]]; then 
             echo "$response"
@@ -40,8 +45,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ${{ env.TARGET }}
+          ref: ${{ env.REF }}
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git remote set-url origin git@github.com:${GITHUB_ACTOR}/${NAME}.git
-          git push -u origin master
+          git push -u origin $REF:master
