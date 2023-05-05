@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ github.GITHUB_ACTOR }}
+      GITHUB_TOKEN: ${{ github.actor }}
     
     steps:
       #- uses: actions/checkout@v3
