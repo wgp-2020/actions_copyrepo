@@ -31,6 +31,7 @@ jobs:
       - name: Checkout tools repo
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           repository: ${GITHUB_ACTOR}/${NAME}
           token: ${{ secrets.TOKEN }}
       - name: 复制公共仓库
