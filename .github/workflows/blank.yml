@@ -7,9 +7,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ github.actor }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_ACTOR: ${{ github.actor }}
     
     steps:
       #- uses: actions/checkout@v3
       - name: 运行命令
-        run: echo $GITHUB_TOKEN
+        run: |
+          echo $GITHUB_TOKEN
+          echo $GITHUB_ACTOR
