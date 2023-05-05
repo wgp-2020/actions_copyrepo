@@ -41,5 +41,5 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GITHUB_ACTOR}/${NAME}.git
+          git remote set-url origin https://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@github.com/wgp-2020/test2.git
           git push -u origin $REF
