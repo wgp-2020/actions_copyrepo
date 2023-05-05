@@ -40,7 +40,7 @@ jobs:
             exit 1 
           fi
       
-      - name: 成功执行
+      - name: 复制公共仓库
         if: success()
         uses: actions/checkout@v3
         with:
