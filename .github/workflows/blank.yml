@@ -1,0 +1,13 @@
+name: 创建私有仓库
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      #- uses: actions/checkout@v3
+      - name: 运行命令
+        run: echo $GITHUB_TOKEN
