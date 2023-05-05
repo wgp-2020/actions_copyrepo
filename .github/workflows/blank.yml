@@ -23,7 +23,6 @@ jobs:
       NAME: ${{ inputs.name }}
     
     steps:
-      #- uses: actions/checkout@v3
       - name: 创建私有仓库
         run: |
           response=$(curl -Lsw "%{http_code}" -X POST -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" \
@@ -35,8 +34,14 @@ jobs:
             echo "$response"
             exit 1 
           fi
-          
+      
       - name: 成功执行
         if: success()
-        run: |
-          echo "ok"
+        uses: actions/checkout@v3
+        with:
+          repository: ${TARGET}
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git remote set-url origin git@github.com:${GITHUB_ACTOR}/${NAME}.git
+          git push -u origin master
