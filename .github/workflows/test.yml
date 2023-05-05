@@ -39,7 +39,5 @@ jobs:
           
       - name: 提交公共仓库
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
           git remote set-url origin https://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@github.com/wgp-2020/test2.git
           git push origin $REF
