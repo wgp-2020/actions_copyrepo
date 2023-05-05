@@ -36,7 +36,7 @@ jobs:
             exit 1 
           fi
           
-      - name: 失败不执行
-        if: failure()
+      - name: 成功执行
+        if: success()
         run: |
           echo "ok"
