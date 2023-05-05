@@ -31,7 +31,7 @@ jobs:
                           https://api.github.com/user/repos \
                           -d '{"name":"${NAME}","description":"源自${TARGET}","private":true}')
           code=$(echo "$response" | tail -1)
-          if [[ "$code" != "201" ]]; then echo "$response"; exit 1; fi
+          echo "$response"
           
       - name: 失败不执行
         if: failure()
