@@ -21,8 +21,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      GITHUB_ACTOR: ${{ github.actor }}
+      TOKEN: ${{ secrets.TOKEN }}
+      ACTOR: ${{ github.actor }}
       TARGET: ${{ inputs.target }}
       REF: ${{ inputs.ref }}
       NAME: ${{ inputs.name }}
@@ -31,7 +31,7 @@ jobs:
       - name: 创建私有仓库
         run: |
           response=$(curl -Lsw "%{http_code}" -X POST -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" \
-                          -H "Authorization: Bearer $GITHUB_TOKEN" \
+                          -H "Authorization: Bearer $TOKEN" \
                           https://api.github.com/user/repos \
                           -d '{"name":"'${NAME}'","description":"源自'${TARGET}':'${REF}'","private":true}')
           code=$(echo "$response" | tail -1)
@@ -40,15 +40,9 @@ jobs:
             exit 1 
           fi
       
-      - name: 签出公共仓库
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ env.TARGET }}
-          ref: ${{ env.REF }}
-          
-      - name: 提交公共仓库
+      - name: 复制公共仓库
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GITHUB_ACTOR}/${NAME}.git
-          git push -u origin $REF
+          git clone -b ${REF} https://github.com/${TARGET}.git
+          cd "$(echo "${TARGET}" | cut -d'/' -f2)"
+          git remote set-url origin https://${TOKEN}@github.com/${ACTOR}/${NAME}.git
+          git push
