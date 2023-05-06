@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: '复制的公共仓库名称 (例：wgp-2020/actions_copyrepo)'
+        description: '复制的公共仓库名称\n(例：wgp-2020/actions_copyrepo)'
         required: true
         type: string
       ref:
