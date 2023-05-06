@@ -31,13 +31,16 @@ jobs:
       NAME: ${{ inputs.name }}
     
     steps:
+      - uses: actions/checkout@v3
       - name: 签出公共仓库
         uses: actions/checkout@v3
         with:
           repository: ${{ env.TARGET }}
           ref: ${{ env.REF }}
+          path: repo
           
       - name: 提交公共仓库
         run: |
           chmod +x *
-          ./copy.sh
+          cd repo
+          ../copy.sh
