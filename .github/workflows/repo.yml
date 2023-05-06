@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: '复制的公共仓库名称'
+        description: '复制的公共仓库名称 (例：wgp-2020/actions_copyrepo)'
         required: true
         type: string
       ref:
-        description: '公共仓库的分支/标签'
+        description: '公共仓库的分支/标签 （例：master）'
         required: true
         type: string
       name:
-        description: '创建的私有仓库名称'
+        description: '创建的私有仓库名称 (例：actions_copyrepo)'
         required: true
         type: string
       
