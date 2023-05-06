@@ -31,16 +31,9 @@ jobs:
       NAME: ${{ inputs.name }}
     
     steps:
-      - uses: actions/checkout@v3
-      - name: 签出公共仓库
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ env.TARGET }}
-          ref: ${{ env.REF }}
-          path: repo
-          
-      - name: 提交公共仓库
+      - name: 复制
         run: |
-          chmod +x *
-          cd repo
-          ../copy.sh
+          git clone https://github.com/${TARGET}.git#{REF}
+          cd "$(echo "${TARGET}" | cut -d'/' -f2)"
+          git remote set-url origin https://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@github.com/wgp-2020/test3.git
+          git push
